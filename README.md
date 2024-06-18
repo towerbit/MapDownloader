@@ -1,3 +1,11 @@
+2024-06-18
+修正 绘图时报错的问题
+修正 腾讯地图/船舶地图无显示的问题
+修正 必应中文地图显示为英文地图的问题
+增加 选择文件切片时，允许选择存储目录
+增加 支持自定义下载瓦片文件命名输出格式
+
+
 # MapDownloader
 Map downloader based on [GMap.NET](https://github.com/radioman/greatmaps)
 
