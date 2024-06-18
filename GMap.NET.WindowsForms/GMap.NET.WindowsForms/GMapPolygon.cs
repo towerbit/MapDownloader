@@ -152,17 +152,13 @@ namespace GMap.NET.WindowsForms
       public virtual void OnRender(Graphics g)
       {
 #if !PocketPC
-         if(IsVisible)
-         {
-             if (IsVisible)
-             {
-                 if (graphicsPath != null)
-                 {
-                     g.FillPath(Fill, graphicsPath);
-                     g.DrawPath(Stroke, graphicsPath);
-                 }
-             }            
-         }
+        if (IsVisible 
+            && graphicsPath != null 
+            && null!= Fill)
+            {
+                g.FillPath(Fill, graphicsPath);
+                g.DrawPath(Stroke, graphicsPath);
+            }
 #else
          {
             if(IsVisible)

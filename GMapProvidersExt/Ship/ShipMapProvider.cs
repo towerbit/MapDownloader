@@ -76,6 +76,13 @@ namespace GMapProvidersExt.Ship
         }
 
         //http://r2.shipxy.com/r2/sp.dll?cmd=112&scode=11111111&z=8&y=113&x=212
-        static readonly string UrlFormat = "http://r2.shipxy.com/r2/sp.dll?cmd=112&scode=11111111&z={0}&y={1}&x={2}";
+        //https://r2.shipxy.com/r2/sp.dll?cmd=112&scode=11111111&z=4&y=7&x=10
+        //https://r2.shipxy.com/r2/sp.dll?cmd=112&scode=11111111&z=14&y=6207&x=13488
+        static readonly string UrlFormat = "https://r2.shipxy.com/r2/sp.dll?cmd=112&scode=11111111&z={0}&y={1}&x={2}";
+
+        protected override bool CheckTileImageHttpResponse(System.Net.WebResponse response)
+        {
+            return true;
+        }
     }
 }

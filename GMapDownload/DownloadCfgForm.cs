@@ -41,6 +41,10 @@ namespace GMapDownload
             backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
             //backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker_ProgressChanged);
             backgroundWorker.RunWorkerAsync();
+
+            // 瓦片模板
+            cboTileWriteFormat.Items.AddRange(TileDownloader.TileWriteFormats);
+            cboTileWriteFormat.SelectedIndex = 0;
         }
 
         private void InitUI()
@@ -183,6 +187,7 @@ namespace GMapDownload
         private void button1_Click(object sender, EventArgs e)
         {
             tileDownloaderArgs.DownloadTiles = new List<DownloadLevelTile>();
+
             for (int i = 0; i < downloadLevelCfgs.Count; ++i)
             {
                 if (downloadLevelCfgs[i].IsChecked)

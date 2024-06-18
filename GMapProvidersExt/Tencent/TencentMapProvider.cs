@@ -384,6 +384,11 @@ namespace GMapProvidersExt.Tencent
         }
 
         static readonly string UrlFormat = "http://p{0}.map.gtimg.com/{1}/{2}.png";
+
+        protected override bool CheckTileImageHttpResponse(System.Net.WebResponse response)
+        {
+            return true;
+        }
     }
 
 }

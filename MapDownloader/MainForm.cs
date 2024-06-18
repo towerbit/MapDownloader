@@ -3,33 +3,32 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
 using System.Drawing.Drawing2D;
-using System.Reflection;
+using System.IO;
 using System.Net;
+using System.Reflection;
+using System.Windows.Forms;
 using GMap.NET;
+using GMap.NET.CacheProviders;
+using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using GMap.NET.MapProviders;
-using GMap.NET.CacheProviders;
-using NetUtil;
-using GMapUtil;
-using log4net;
 using GMapChinaRegion;
-using GMapPolygonLib;
-using GMapMarkerLib;
-using GMapDrawTools;
 using GMapCommonType;
-using GMapProvidersExt;
-using GMapProvidersExt.Tencent;
-using GMapProvidersExt.AMap;
-using GMapProvidersExt.Baidu;
+using GMapDownload;
+using GMapDrawTools;
 using GMapExport;
 using GMapHeat;
-using GMapDownload;
+using GMapMarkerLib;
 using GMapPOI;
+using GMapPolygonLib;
+using GMapProvidersExt.AMap;
+using GMapProvidersExt.Baidu;
+using GMapProvidersExt.Tencent;
 using GMapTools;
+using GMapUtil;
+using log4net;
+using NetUtil;
 
 namespace MapDownloader
 {
@@ -570,11 +569,23 @@ namespace MapDownloader
             int storeType = this.comboBoxStore.SelectedIndex;
             switch (storeType)
             {
-                case 0:
-                    mapControl.Manager.PrimaryCache = sqliteCache;
-                    break;
                 case 1:
                     mapControl.Manager.PrimaryCache = mysqlCache;
+                    break;
+                case 2:
+                    mapControl.Manager.PrimaryCache = sqliteCache;
+                    // 修改为文件时，询问保存目录
+                    if (comboBoxStore.SelectedIndex == 2)
+                    {
+                        using (var fbd = new FolderBrowserDialog())
+                        {
+                            fbd.RootFolder = Environment.SpecialFolder.MyComputer;
+                            fbd.ShowNewFolderButton = true;
+                            fbd.SelectedPath = tilePath;
+                            if (fbd.ShowDialog() == DialogResult.OK)
+                                tilePath = fbd.SelectedPath;
+                        }
+                    }
                     break;
                 default:
                     mapControl.Manager.PrimaryCache = sqliteCache;
@@ -619,6 +630,7 @@ namespace MapDownloader
                             if (this.comboBoxStore.SelectedIndex == 2)
                             {
                                 tileDownloader.TilePath = this.tilePath;
+                                tileDownloader.TileWriteFormat = downloadCfgForm.cboTileWriteFormat.Text;
                             }
                             tileDownloader.Retry = retryNum;
                             tileDownloader.PrefetchTileStart += new EventHandler<TileDownloadEventArgs>(tileDownloader_PrefetchTileStart);

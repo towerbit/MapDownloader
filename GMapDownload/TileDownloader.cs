@@ -63,6 +63,55 @@ namespace GMapDownload
             downloadFailedThread = new Thread(DownloadFailedTiles);
         }
 
+        #region 预置的输出格式
+
+        public static string[] TileWriteFormats => new string[]
+        {
+            FORMAT_DEFAULT,
+            FORMAT_NORMAL,
+            FORMAT_SPECIAL
+        };
+
+        /// <summary>
+        /// 默认瓦片格式
+        /// </summary>
+        private const string FORMAT_DEFAULT = "/L{z:D2}/R{y:x8}/L{x:x8}.png";
+        /// <summary>
+        /// 常用瓦片格式
+        /// </summary>
+        private const string FORMAT_NORMAL = "/{z}/{x}_{y}.png";
+        /// <summary>
+        /// 特定瓦片格式
+        /// </summary>
+        private const string FORMAT_SPECIAL = "/{z}/{x}/{y}/x={x}&y={y}&z={z}.png";
+        #endregion
+
+        private string _tileWriteFormat = convertToTileFormat(FORMAT_DEFAULT);
+
+        private static string convertFromTileFormat(string format) => format.Replace("{0", "{z")
+                                                                            .Replace("{1", "{x")
+                                                                            .Replace("{2", "{y");
+        private static string convertToTileFormat(string format) => format.Replace("{z", "{0")
+                                                                          .Replace("{x", "{1")
+                                                                          .Replace("{y", "{2");
+        /// <summary>
+        /// 自定义输出格式： 0-z(zoom), 1-x, 2-y, 一般应以 / 开头
+        /// </summary>
+        public string TileWriteFormat 
+        {
+            get => convertFromTileFormat(_tileWriteFormat);
+            set 
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    _tileWriteFormat = value;
+                    if (!_tileWriteFormat.StartsWith("/"))
+                        _tileWriteFormat = "/" + _tileWriteFormat;
+                    _tileWriteFormat = convertToTileFormat(_tileWriteFormat);
+                }
+            }
+        }
+
         // Update progress
         void updateUiTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -269,23 +318,26 @@ namespace GMapDownload
             return true;
         }
 
+        /// <summary>
+        /// 写入瓦片文件
+        /// </summary>
+        /// <param name="img"></param>
+        /// <param name="zoom"></param>
+        /// <param name="p"></param>
         private void WriteTileToDisk(PureImage img, int zoom, GPoint p)
         {
+            if(string.IsNullOrEmpty(_tileWriteFormat))
+                throw new ArgumentNullException("tilePathFormat can not be null or empty");
+            
             DirectoryInfo di = new DirectoryInfo(tilePath + "/_alllayers");
-
-            string zoomStr = string.Format("{0:D2}", zoom);
             long x = p.X;
             long y = p.Y;
-            string col = string.Format("{0:x8}", x).ToLower();
-            string row = string.Format("{0:x8}", y).ToLower();
-
-            string dir = di.FullName + "/L" + zoomStr + "/R" + row + "//";
+            string filename = di.FullName + string.Format(_tileWriteFormat, zoom, x, y);
+            string dir = Path.GetDirectoryName(filename);
             if (!Directory.Exists(dir))
-            {
                 Directory.CreateDirectory(dir);
-            }
-
-            FileStream fs = new FileStream(dir + "C" + col + ".png", FileMode.Create, FileAccess.Write);
+            
+            FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
             BinaryWriter sw = new BinaryWriter(fs);
             //读出图片字节数组至byte[]
             byte[] imageByte = img.Data.ToArray();

@@ -34,7 +34,7 @@ namespace GMapProvidersExt.Bing
         {
             try
             {
-                string url = this.MakeTileImageUrl(pos, zoom, GMapProvider.LanguageStr);
+                string url = this.MakeTileImageUrl(pos, zoom, "zh-cn");// GMapProvider.LanguageStr);
                 return base.GetTileImageUsingHttp(url);
             }
             catch (Exception ex)
@@ -46,7 +46,15 @@ namespace GMapProvidersExt.Bing
         private string MakeTileImageUrl(GPoint pos, int zoom, string language)
         {
             string str = base.TileXYToQuadKey(pos.X, pos.Y, zoom);
-            return string.Format("http://r{0}.tiles.ditu.live.com/tiles/r{1}.png?g={2}&mkt={3}", new object[] { GMapProvider.GetServerNum(pos, 4), str, base.Version, language, !string.IsNullOrEmpty(base.ClientKey) ? ("&key=" + base.ClientKey) : string.Empty });
+            return string.Format("http://r{0}.tiles.ditu.live.com/tiles/r{1}.png?g={2}&mkt={3}", 
+                new object[] 
+                { 
+                    GMapProvider.GetServerNum(pos, 4), 
+                    str, 
+                    base.Version, 
+                    language, 
+                    !string.IsNullOrEmpty(base.ClientKey) ? ("&key=" + base.ClientKey) : string.Empty 
+                });
         }
 
         // Properties

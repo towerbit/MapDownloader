@@ -44,23 +44,25 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.panelLevel = new System.Windows.Forms.Panel();
             this.dataGridViewLevel = new System.Windows.Forms.DataGridView();
-            this.downloadLevelCfgBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.PreSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cboTileWriteFormat = new System.Windows.Forms.ComboBox();
             this.isCheckedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.zoomLevelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.zoomLevelRowDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.zoomLevelColDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.preCountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PreSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.downloadLevelCfgBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panelLevel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLevel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.downloadLevelCfgBindingSource)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.downloadLevelCfgBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -215,16 +217,23 @@
             this.dataGridViewLevel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewLevel.Location = new System.Drawing.Point(0, 30);
             this.dataGridViewLevel.Name = "dataGridViewLevel";
+            this.dataGridViewLevel.RowHeadersWidth = 51;
             this.dataGridViewLevel.RowTemplate.Height = 23;
             this.dataGridViewLevel.Size = new System.Drawing.Size(594, 297);
             this.dataGridViewLevel.TabIndex = 2;
             // 
-            // downloadLevelCfgBindingSource
+            // PreSize
             // 
-            this.downloadLevelCfgBindingSource.DataSource = typeof(GMapDownload.DownloadLevelCfg);
+            this.PreSize.DataPropertyName = "PreSize";
+            this.PreSize.HeaderText = "大小";
+            this.PreSize.MinimumWidth = 6;
+            this.PreSize.Name = "PreSize";
+            this.PreSize.ReadOnly = true;
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.cboTileWriteFormat);
+            this.panel3.Controls.Add(this.label6);
             this.panel3.Controls.Add(this.button5);
             this.panel3.Controls.Add(this.button4);
             this.panel3.Controls.Add(this.button3);
@@ -264,16 +273,35 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(187, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "命名模板";
+            // 
+            // cboTileWriteFormat
+            // 
+            this.cboTileWriteFormat.FormattingEnabled = true;
+            this.cboTileWriteFormat.Location = new System.Drawing.Point(252, 5);
+            this.cboTileWriteFormat.Name = "cboTileWriteFormat";
+            this.cboTileWriteFormat.Size = new System.Drawing.Size(316, 20);
+            this.cboTileWriteFormat.TabIndex = 4;
+            // 
             // isCheckedDataGridViewCheckBoxColumn
             // 
             this.isCheckedDataGridViewCheckBoxColumn.DataPropertyName = "IsChecked";
             this.isCheckedDataGridViewCheckBoxColumn.HeaderText = "";
+            this.isCheckedDataGridViewCheckBoxColumn.MinimumWidth = 6;
             this.isCheckedDataGridViewCheckBoxColumn.Name = "isCheckedDataGridViewCheckBoxColumn";
             // 
             // zoomLevelDataGridViewTextBoxColumn
             // 
             this.zoomLevelDataGridViewTextBoxColumn.DataPropertyName = "ZoomLevel";
             this.zoomLevelDataGridViewTextBoxColumn.HeaderText = "级别";
+            this.zoomLevelDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.zoomLevelDataGridViewTextBoxColumn.Name = "zoomLevelDataGridViewTextBoxColumn";
             this.zoomLevelDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -281,6 +309,7 @@
             // 
             this.zoomLevelRowDataGridViewTextBoxColumn.DataPropertyName = "ZoomLevelRow";
             this.zoomLevelRowDataGridViewTextBoxColumn.HeaderText = "行数";
+            this.zoomLevelRowDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.zoomLevelRowDataGridViewTextBoxColumn.Name = "zoomLevelRowDataGridViewTextBoxColumn";
             this.zoomLevelRowDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -288,6 +317,7 @@
             // 
             this.zoomLevelColDataGridViewTextBoxColumn.DataPropertyName = "ZoomLevelCol";
             this.zoomLevelColDataGridViewTextBoxColumn.HeaderText = "列数";
+            this.zoomLevelColDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.zoomLevelColDataGridViewTextBoxColumn.Name = "zoomLevelColDataGridViewTextBoxColumn";
             this.zoomLevelColDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -295,15 +325,13 @@
             // 
             this.preCountDataGridViewTextBoxColumn.DataPropertyName = "PreCount";
             this.preCountDataGridViewTextBoxColumn.HeaderText = "总数";
+            this.preCountDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.preCountDataGridViewTextBoxColumn.Name = "preCountDataGridViewTextBoxColumn";
             this.preCountDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // PreSize
+            // downloadLevelCfgBindingSource
             // 
-            this.PreSize.DataPropertyName = "PreSize";
-            this.PreSize.HeaderText = "大小";
-            this.PreSize.Name = "PreSize";
-            this.PreSize.ReadOnly = true;
+            this.downloadLevelCfgBindingSource.DataSource = typeof(GMapDownload.DownloadLevelCfg);
             // 
             // DownloadCfgForm
             // 
@@ -324,8 +352,9 @@
             this.panel2.PerformLayout();
             this.panelLevel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLevel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.downloadLevelCfgBindingSource)).EndInit();
             this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.downloadLevelCfgBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -358,5 +387,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn zoomLevelColDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn preCountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PreSize;
+        private System.Windows.Forms.Label label6;
+        public System.Windows.Forms.ComboBox cboTileWriteFormat;
     }
 }
